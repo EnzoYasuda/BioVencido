@@ -1,0 +1,19 @@
+{
+  "name": "biovencido-backend",
+  "version": "1.0.0",
+  "description": "API do BioVencido - Controle de itens perecíveis",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@prisma/client": "^6.19.3",
+    "nodemon": "^3.1.14",
+    "prisma": "^6.19.3"
+  }
+}
