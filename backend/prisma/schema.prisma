@@ -50,6 +50,9 @@ model Receitas {
   modoPreparo      String           @db.Text
   nivelDificuldade String           @db.VarChar(20)
   tempoPreparoMin  Int?
+  alergenos        Json?
+  categoriaReceita String?          @db.VarChar(100)
+  dieta            String?          @db.VarChar(50)
   itemId           Int?
 
   item             ItensPereciveis? @relation(fields: [itemId], references: [id])

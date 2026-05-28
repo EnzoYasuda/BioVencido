@@ -2,31 +2,47 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 async function listar(req, res) {
+
     try {
-        const usuarios = await prisma.usuario.findMany({
-            select: {
-                id: true,
-                nome: true,
-                email: true,
-                dataCadastro: true,
-                alergias: true,
-                dietas: true,
-                notificacoes: true
+    const { email } = req.query
+
+    // Se veio email, é chamada de login — retorna senha também
+    if (email) {
+        const usuario = await prisma.usuario.findUnique({
+        where: { email },
+        select: {
+            id: true, nome: true, email: true, senha: true,
+            dataCadastro: true, alergias: true, dietas: true, notificacoes: true
+        }
+        })
+        if (!usuario) return res.json([])
+
+
+
+        return res.json([{
+        ...usuario,
+        alergias:     Array.isArray(usuario.alergias)     ? usuario.alergias     : [],
+        dietas:       Array.isArray(usuario.dietas)       ? usuario.dietas       : [],
+        notificacoes: Array.isArray(usuario.notificacoes) ? usuario.notificacoes : []
+        }])
+    }
+
+    // Listagem normal — sem senha
+    const usuarios = await prisma.usuario.findMany({
+        select: {
+        id: true, nome: true, email: true,
+        dataCadastro: true, alergias: true, dietas: true, notificacoes: true
             }
-        });
-        
-        // Prisma já retorna JSON como arrays/objetos, apenas garantir que são arrays
-        const usuariosFormatados = usuarios.map(u => ({
-            ...u,
-            alergias: Array.isArray(u.alergias) ? u.alergias : [],
-            dietas: Array.isArray(u.dietas) ? u.dietas : [],
-            notificacoes: Array.isArray(u.notificacoes) ? u.notificacoes : []
-        }));
-        
-        res.json(usuariosFormatados);
+    })
+    res.json(usuarios.map(u => ({
+        ...u,
+        alergias:     Array.isArray(u.alergias)     ? u.alergias     : [],
+        dietas:       Array.isArray(u.dietas)       ? u.dietas       : [],
+        notificacoes: Array.isArray(u.notificacoes) ? u.notificacoes : []
+    })))
     } catch (error) {
-        console.error('Erro ao listar usuários:', error);
-        res.status(500).json({ error: 'Erro ao listar usuários' });
+    console.error('Erro ao listar usuários:', error)
+    res.status(500).json({ error: 'Erro ao listar usuários' })
     }
 }
 
