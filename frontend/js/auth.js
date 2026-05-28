@@ -7,27 +7,36 @@ const API = 'http://localhost:3000'
 
 // ── LOGIN ──
 async function fazerLogin() {
+  // ← Limpa mensagens anteriores ANTES de qualquer coisa
+  const el = document.getElementById('errorMsg')
+  if (el) { el.textContent = ''; el.style.display = 'none' }
+
   const email = document.getElementById('loginEmail').value.trim()
   const senha = document.getElementById('loginSenha').value
   if (!email || !senha) { mostrarErro('Preencha email e senha.'); return }
 
   try {
-    const res   = await fetch(`${API}/usuario`)
+    const res   = await fetch(`${API}/usuario?email=${encodeURIComponent(email)}`)
     const lista = await res.json()
-    const usuario = lista.find(u => u.email === email)
+    const usuario = lista[0]
 
     if (!usuario) {
       mostrarErro('Email não encontrado. Verifique ou crie uma conta.')
       return
     }
 
-    sessionStorage.setItem('usuario', JSON.stringify(usuario))
+    if (usuario.senha !== senha) {
+      mostrarErro('Senha incorreta. Tente novamente.')
+      return
+    }
+
+    const { senha: _, ...usuarioSemSenha } = usuario
+    sessionStorage.setItem('usuario', JSON.stringify(usuarioSemSenha))
     window.location.href = '../index.html'
   } catch (err) {
     mostrarErro('Erro ao conectar ao servidor.')
   }
 }
-
 // ── CADASTRO ──
 async function criarConta() {
   const nome      = document.getElementById('cadNome').value.trim()
@@ -72,6 +81,6 @@ function mostrarSucesso(msg) {
 }
 
 // ── Redireciona se já estiver logado ──
-if (sessionStorage.getItem('usuario')) {
-  window.location.href = '../index.html'
-}
+// if (sessionStorage.getItem('usuario')) {
+ //  window.location.href = '../index.html'
+// }

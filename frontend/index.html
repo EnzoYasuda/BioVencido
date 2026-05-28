@@ -4,66 +4,48 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BioVencido — Controle de Validade</title>
-
-  <!-- Fontes Google -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
-  <!-- Estilos -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════
-     SIDEBAR — Navegação lateral
-     ══════════════════════════════════════════ -->
 <nav class="sidebar">
   <div class="logo">
     <div class="logo-icon">🥬</div>
     <div class="logo-text">Bio<span>vencido</span></div>
   </div>
-
   <div class="nav-label">Menu</div>
   <ul class="nav-list">
     <li class="nav-item active" data-section="despensa">
       <a href="#" onclick="navigate('despensa', this)">
-        <span class="icon">📦</span>
-        <span>Minha Despensa</span>
+        <span class="icon">📦</span><span>Minha Despensa</span>
       </a>
     </li>
     <li class="nav-item" data-section="receitas">
       <a href="#" onclick="navigate('receitas', this)">
-        <span class="icon">👨‍🍳</span>
-        <span>Receitas</span>
-      </a>
-    </li>
-    <li class="nav-item" data-section="usuario">
-      <a href="#" onclick="navigate('usuario', this)">
-        <span class="icon">👤</span>
-        <span>Meu Perfil</span>
+        <span class="icon">👨‍🍳</span><span>Receitas</span>
       </a>
     </li>
     <li class="nav-item" data-section="descarte">
       <a href="#" onclick="navigate('descarte', this)">
-        <span class="icon">♻️</span>
-        <span>Descarte</span>
+        <span class="icon">♻️</span><span>Destinar</span>
+      </a>
+    </li>
+    <li class="nav-item" data-section="usuario">
+      <a href="#" onclick="navigate('usuario', this)">
+        <span class="icon">👤</span><span>Meu Perfil</span>
       </a>
     </li>
   </ul>
-
   <div class="sidebar-footer">
     Despensa v1.0<br>
     Reduza o desperdício,<br>cuide do planeta.
   </div>
 </nav>
 
-<!-- ══════════════════════════════════════════
-     MAIN — Conteúdo principal
-     ══════════════════════════════════════════ -->
 <main class="main">
 
-  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-       SEÇÃO 1 — MINHA DESPENSA
-       ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+  <!-- SEÇÃO 1 — MINHA DESPENSA -->
   <section class="section active" id="despensa">
     <div class="section-header">
       <div>
@@ -72,8 +54,6 @@
       </div>
       <button class="btn btn-terra" onclick="openModal()">+ Adicionar produto</button>
     </div>
-
-    <!-- Cartões de estatísticas -->
     <div class="stats-strip">
       <div class="stat-card total">
         <div class="stat-value" id="totalCount">0</div>
@@ -92,8 +72,6 @@
         <div class="stat-label">Urgente / Vencido</div>
       </div>
     </div>
-
-    <!-- Filtros por categoria e busca -->
     <div class="filters">
       <span class="filter-chip active" onclick="filterProducts('todos', this)">Todos</span>
       <span class="filter-chip" onclick="filterProducts('laticinio', this)">🧀 Laticínios</span>
@@ -102,19 +80,17 @@
       <span class="filter-chip" onclick="filterProducts('verdura', this)">🥦 Verduras</span>
       <span class="filter-chip" onclick="filterProducts('bebida', this)">🥛 Bebidas</span>
       <span class="filter-chip" onclick="filterProducts('carne', this)">🥩 Carnes</span>
+      <span class="filter-chip" onclick="filterProducts('ovo', this)">🥚 Ovos</span>
+      <span class="filter-chip" onclick="filterProducts('enlatado', this)">🥫 Enlatados</span>
       <div class="search-box">
         <span>🔍</span>
         <input type="text" placeholder="Buscar produto..." oninput="searchProducts(this.value)">
       </div>
     </div>
-
-    <!-- Grade de produtos (preenchida via JS) -->
     <div class="product-grid" id="productGrid"></div>
   </section>
 
-  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-       SEÇÃO 2 — RECEITAS
-       ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+  <!-- SEÇÃO 2 — RECEITAS -->
   <section class="section" id="receitas">
     <div class="section-header">
       <div>
@@ -122,82 +98,73 @@
         <p>Receitas pensadas para aproveitar o que você tem — priorizando o que vence primeiro.</p>
       </div>
     </div>
-
-    <!-- Banner de alerta com ingredientes urgentes -->
     <div class="recipe-hero">
       <div>
         <h2>Use antes que vença! 🕐</h2>
         <p>Você tem produtos próximos da validade. Aqui estão receitas que aproveitam exatamente esses ingredientes.</p>
-        <div class="recipe-hero-tags">
-          <span class="hero-tag">🧀 Queijo mussarela — 3 dias</span>
-          <span class="hero-tag">🍅 Tomate — 4 dias</span>
-          <span class="hero-tag">🥛 Leite — 2 dias</span>
-        </div>
+        <div class="recipe-hero-tags"></div>
       </div>
     </div>
-
-    <!-- Grade de receitas (preenchida via JS) -->
     <div class="recipe-grid" id="recipeGrid"></div>
   </section>
 
-  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-       SEÇÃO 3 — PERFIL DO USUÁRIO
-       ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+  <!-- SEÇÃO 3 — PERFIL DO USUÁRIO -->
   <section class="section" id="usuario">
     <div class="section-header">
       <div>
         <h1>Meu <em>Perfil</em></h1>
         <p>Configure suas restrições alimentares, dieta e endereço para personalizar sua experiência.</p>
       </div>
-      <button class="btn btn-primary" onclick="saveProfile()">💾 Salvar perfil</button>
+      <!-- Botões modo leitura / edição -->
+      <div id="perfilBotoes">
+        <button class="btn btn-secondary" onclick="editarPerfil()">✏️ Editar perfil</button>
+      </div>
+    </div>
+
+    <!-- Banner de modo leitura -->
+    <div id="perfilLeituraAviso" style="
+      background:var(--creme-dark,#f1ede6);
+      border:1.5px solid var(--verde,#5a7a5a);
+      border-radius:12px;padding:12px 20px;
+      margin-bottom:24px;font-size:13px;
+      color:var(--text-mid,#666);
+      display:flex;align-items:center;gap:10px;
+    ">
+      🔒 <span>Perfil em modo de visualização. Clique em <strong>Editar perfil</strong> para fazer alterações.</span>
     </div>
 
     <div class="user-layout">
-
-      <!-- Coluna esquerda: Alergias + Dietas -->
+      <!-- Coluna esquerda -->
       <div class="profile-card">
         <h3><span class="icon">⚠️</span> Alergias alimentares</h3>
         <p style="font-size:13px;color:var(--text-mid);margin-bottom:16px;">
-          Informe suas alergias para que as receitas sugeridas sejam seguras para você.
+          Marque suas alergias para que as receitas sugeridas sejam seguras para você.
         </p>
-
-        <!-- Campo de tags de alergias -->
-        <div class="tag-input-area" id="alergiaArea">
-          <span class="alergia-tag">Glúten <button onclick="removeTag(this)">×</button></span>
-          <span class="alergia-tag">Lactose <button onclick="removeTag(this)">×</button></span>
-          <input type="text" placeholder="Digite e pressione Enter..." onkeydown="addTag(event, this)">
+        <div class="checkbox-group" id="alergiaGroup">
+          <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Lactose</label>
+          <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Glúten</label>
+          <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Ovo</label>
+          <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Amendoim</label>
+          <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Frutos do mar</label>
+          <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Soja</label>
+          <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Nozes</label>
         </div>
-        <p style="font-size:11px;color:var(--text-light);">Pressione Enter para adicionar uma alergia.</p>
 
         <div class="divider"></div>
 
         <h3 style="margin-bottom:16px;"><span class="icon">🥗</span> Dietas específicas</h3>
         <div class="checkbox-group" id="dietaGroup">
-          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
-            <input type="checkbox"> Vegetariano
-          </label>
-          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
-            <input type="checkbox"> Vegano
-          </label>
-          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
-            <input type="checkbox"> Low Carb
-          </label>
-          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
-            <input type="checkbox"> Sem açúcar
-          </label>
-          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
-            <input type="checkbox"> Sem glúten
-          </label>
-          <label class="checkbox-item" onclick="this.classList.toggle('checked')">
-            <input type="checkbox"> Dieta mediterrânea
-          </label>
+          <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Vegetariano</label>
+          <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Vegano</label>
+          <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Low Carb</label>
+          <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Sem açúcar</label>
+          <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Sem glúten</label>
+          <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Dieta mediterrânea</label>
         </div>
       </div>
 
-      <!-- Coluna direita: Endereço + Notificações -->
+      <!-- Coluna direita -->
       <div style="display:flex;flex-direction:column;gap:24px;">
-
-        <!-- Endereço -->
         <div class="profile-card">
           <h3><span class="icon">📍</span> Endereço</h3>
           <p style="font-size:13px;color:var(--text-mid);margin-bottom:20px;">
@@ -208,24 +175,12 @@
             <input type="text" placeholder="00000-000" id="cepInput" oninput="formatCEP(this)">
           </div>
           <div class="form-row">
-            <div class="form-group">
-              <label>Rua</label>
-              <input type="text" placeholder="Rua das Flores" id="endRua">
-            </div>
-            <div class="form-group">
-              <label>Número</label>
-              <input type="text" placeholder="123" id="endNumero">
-            </div>
+            <div class="form-group"><label>Rua</label><input type="text" placeholder="Rua das Flores" id="endRua"></div>
+            <div class="form-group"><label>Número</label><input type="text" placeholder="123" id="endNumero"></div>
           </div>
           <div class="form-row">
-            <div class="form-group">
-              <label>Bairro</label>
-              <input type="text" placeholder="Centro" id="endBairro">
-            </div>
-            <div class="form-group">
-              <label>Cidade</label>
-              <input type="text" placeholder="São Paulo" id="endCidade">
-            </div>
+            <div class="form-group"><label>Bairro</label><input type="text" placeholder="Centro" id="endBairro"></div>
+            <div class="form-group"><label>Cidade</label><input type="text" placeholder="São Paulo" id="endCidade"></div>
           </div>
           <div class="address-block">
             <div class="address-icon">🏠</div>
@@ -236,76 +191,69 @@
           </div>
         </div>
 
-        <!-- Notificações -->
         <div class="profile-card">
           <h3><span class="icon">🔔</span> Notificações</h3>
           <div class="checkbox-group">
-            <label class="checkbox-item checked" onclick="this.classList.toggle('checked')">
-              <input type="checkbox" checked> Avisar 7 dias antes do vencimento
-            </label>
-            <label class="checkbox-item checked" onclick="this.classList.toggle('checked')">
-              <input type="checkbox" checked> Avisar 3 dias antes do vencimento
-            </label>
-            <label class="checkbox-item" onclick="this.classList.toggle('checked')">
-              <input type="checkbox"> Sugerir receitas automaticamente
-            </label>
-            <label class="checkbox-item" onclick="this.classList.toggle('checked')">
-              <input type="checkbox"> Resumo semanal por e-mail
-            </label>
+            <label class="checkbox-item checked" onclick="toggleCheck(this)"><input type="checkbox" checked> Avisar 7 dias antes do vencimento</label>
+            <label class="checkbox-item checked" onclick="toggleCheck(this)"><input type="checkbox" checked> Avisar 3 dias antes do vencimento</label>
+            <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Sugerir receitas automaticamente</label>
+            <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Resumo semanal por e-mail</label>
           </div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-       SEÇÃO 4 — PONTOS DE DESCARTE
-       ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+  <!-- SEÇÃO 4 — DESTINAR -->
   <section class="section" id="descarte">
     <div class="section-header">
       <div>
-        <h1>Pontos de <em>Descarte</em></h1>
-        <p>Locais próximos ao seu endereço onde você pode descartar alimentos de forma responsável.</p>
+        <h1>Pontos de <em>Destino</em></h1>
+        <p>Descarte ou doe seus alimentos de forma responsável e solidária.</p>
       </div>
     </div>
-
+    <div style="display:flex;gap:12px;margin-bottom:24px;">
+      <button id="tabDescarte" class="btn btn-primary"
+        onclick="switchTab('descarte')"
+        style="border-radius:30px;padding:10px 24px;">
+        ♻️ Pontos de Descarte
+      </button>
+      <button id="tabDoacao" class="btn btn-secondary"
+        onclick="switchTab('doacao')"
+        style="border-radius:30px;padding:10px 24px;">
+        🤝 Locais de Doação
+      </button>
+    </div>
     <div class="descarte-layout">
-
-      <!-- Lista de pontos (preenchida via JS) -->
       <div class="descarte-list" id="descarteList"></div>
-
-      <!-- Painel do mapa -->
-      <div class="map-placeholder">
+      <div class="map-placeholder" style="align-self:flex-start;position:sticky;top:24px;">
         <div class="map-header">
           <h3>📍 Mapa de pontos</h3>
           <p style="font-size:12px;color:var(--text-light);margin-top:4px;">
-            Baseado no seu endereço em São Paulo, SP
+            Baseado no seu endereço cadastrado
           </p>
         </div>
-        <div class="map-body">
+        <div class="map-body" style="padding:24px 16px;">
           <div class="map-emoji">🗺️</div>
-          <p>Integre com Google Maps<br>para ver os pontos no mapa</p>
-          <button class="btn btn-primary btn-sm" style="margin-top:4px;">Abrir no Maps</button>
+          <p style="margin:8px 0 16px;">Veja os pontos próximos<br>a você no Google Maps</p>
+          <button class="btn btn-primary btn-sm" onclick="abrirMapaGeral()">
+            Abrir no Maps
+          </button>
         </div>
         <div class="map-footer">
-          💡 <strong>Dica:</strong> Antes de descartar, verifique se o local aceita o tipo
-          de material que você tem. Ligue ou acesse o site do ponto.
+          💡 <strong>Dica:</strong> Antes de descartar ou doar, verifique
+          se o local aceita o tipo de material que você tem.
         </div>
       </div>
-
     </div>
   </section>
 
 </main>
 
-<!-- ══════════════════════════════════════════
-     MODAL — Adicionar / Editar produto
-     ══════════════════════════════════════════ -->
+<!-- MODAL — Adicionar produto -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
   <div class="modal">
     <h2>Adicionar <em>produto</em></h2>
-
     <div class="form-row">
       <div class="form-group">
         <label>Nome do produto</label>
@@ -320,11 +268,12 @@
           <option value="verdura">🥦 Verdura</option>
           <option value="bebida">🥛 Bebida</option>
           <option value="carne">🥩 Carne</option>
+          <option value="ovo">🥚 Ovo</option>
+          <option value="enlatado">🥫 Enlatado</option>
           <option value="outro">📦 Outro</option>
         </select>
       </div>
     </div>
-
     <div class="form-row">
       <div class="form-group">
         <label>Data de validade</label>
@@ -335,12 +284,10 @@
         <input type="text" id="newQty" placeholder="Ex: 2 unidades">
       </div>
     </div>
-
     <div class="form-group">
       <label>Observações (opcional)</label>
       <textarea id="newNotes" placeholder="Onde está guardado, se já foi aberto..."></textarea>
     </div>
-
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
       <button class="btn btn-terra" onclick="addProduct()">Adicionar produto</button>
@@ -348,12 +295,7 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     TOAST — Notificação temporária
-     ══════════════════════════════════════════ -->
 <div id="toast"></div>
-
-<!-- Script principal -->
 <script src="js/script.js"></script>
 </body>
 </html>
