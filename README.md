@@ -111,7 +111,7 @@ Antes de rodar o projeto, você precisa ter instalado:
 - [Node.js](https://nodejs.org/) (versão 18 ou superior)
 - [MySQL](https://www.mysql.com/) (versão 8 ou superior)
 - [Git](https://git-scm.com/)
-- Extensão **Live Server** no VS Code (para o front-end)
+- [VS Code](https://code.visualstudio.com/) com a extensão **Live Server** instalada
 
 ---
 
@@ -124,56 +124,75 @@ git clone https://github.com/EnzoYasuda/BioVencido.git
 cd BioVencido
 ```
 
+---
+
 ### 2. Configure o Banco de Dados
 
-Abra o MySQL Workbench ou terminal MySQL e crie o banco:
+Abra o **MySQL Workbench**, conecte ao servidor local e execute:
 
 ```sql
 CREATE DATABASE BioVencido;
 ```
 
-Importe o dump com todos os dados:
+Depois, importe o dump pelo terminal (fora do VS Code, no Prompt de Comando do Windows):
 
 ```bash
 mysql -u root -p BioVencido < bioVencido.sql
 ```
 
-Isso irá criar todas as tabelas e já popular o banco com:
+> ⚠️ Quando pedir senha, digite a senha do seu MySQL e pressione Enter. O cursor não vai aparecer — isso é normal.
+
+Isso irá criar todas as tabelas e popular o banco com:
 - 233 receitas categorizadas
 - 30 locais de doação
 - 30 ecopontos de descarte
 - 62 endereços cadastrados
 
+---
+
 ### 3. Configure as variáveis de ambiente
 
-Dentro da pasta `backend/`, copie o arquivo de exemplo:
+Dentro da pasta `backend/`, crie um arquivo chamado **`.env`** (sem nenhuma extensão).
 
-```bash
-cd backend
-cp .env.example .env
-```
+> **Windows:** Abra o VS Code, navegue até a pasta `backend/` e crie um novo arquivo chamado `.env`
 
-Abra o `.env` e preencha com seus dados:
+Cole o seguinte conteúdo e substitua com seus dados:
 
 ```env
 DATABASE_URL="mysql://root:SUA_SENHA@localhost:3306/BioVencido"
 GROQ_API_KEY=sua_chave_aqui
 ```
 
-> A chave Groq é gratuita e pode ser obtida em [console.groq.com](https://console.groq.com)
+**Onde obter cada valor:**
+
+- `SUA_SENHA` → a senha que você usa para entrar no MySQL Workbench
+- `GROQ_API_KEY` → chave gratuita obtida em [console.groq.com](https://console.groq.com) (criar conta → API Keys → Create API Key)
+
+> 📧 Se preferir não criar a conta Groq, entre em contato com a equipe para receber uma chave de teste.
+
+---
 
 ### 4. Instale as dependências do Back-End
 
+Abra o terminal do VS Code dentro da pasta `backend/` e execute:
+
 ```bash
-cd backend
 npm install
 ```
 
+---
+
 ### 5. Gere o cliente Prisma
+
+Ainda dentro da pasta `backend/`, execute:
 
 ```bash
 npx prisma generate
 ```
+
+> Esse comando é necessário para o Prisma conseguir se comunicar com o banco de dados.
+
+---
 
 ### 6. Inicie o servidor
 
@@ -181,15 +200,37 @@ npx prisma generate
 npm run dev
 ```
 
-O servidor estará rodando em `http://localhost:3000`
+Aguarde aparecer a mensagem:
+```
+Servidor rodando na porta 3000
+```
+
+> Deixe esse terminal aberto enquanto usa o site. Se fechar, o site para de funcionar.
+
+---
 
 ### 7. Abra o Front-End
 
-No VS Code, clique com o botão direito no arquivo `frontend/index.html` e selecione **"Open with Live Server"**.
+No VS Code, clique com o **botão direito** no arquivo `frontend/index.html` e selecione **"Open with Live Server"**.
 
-O site abrirá em `http://127.0.0.1:5500`
+O site abrirá automaticamente no navegador em:
+```
+http://127.0.0.1:5500
+```
 
-> ⚠️ Não abra o `index.html` diretamente pelo navegador (file:///) — isso bloqueia as chamadas para a API.
+> ⚠️ **Importante:** Não abra o arquivo diretamente pelo navegador (file:///). Isso bloqueia a comunicação com o servidor e o site não vai funcionar corretamente.
+
+---
+
+### ✅ Checklist Final
+
+Antes de usar o site, confirme:
+
+- [ ] MySQL está rodando
+- [ ] Banco `BioVencido` foi criado e populado com o dump
+- [ ] Arquivo `.env` está criado na pasta `backend/` com senha e chave corretas
+- [ ] Terminal com `npm run dev` está aberto e mostra "Servidor rodando na porta 3000"
+- [ ] Site aberto pelo Live Server (URL começa com `http://127.0.0.1:5500`)
 
 ---
 
@@ -248,7 +289,7 @@ O servidor roda na porta `3000`. Principais endpoints:
 Grupo **BioVencido** — PUC-Campinas, 2026
 
 | Nome | RA |
-|------|----|
+|------|-----|
 | Enzo Eiki Yasuda | 24000880 |
 | Gustavo Bordin Corrêa | 24002887 |
 | Felipe Martins Leivas | 24001643 |
